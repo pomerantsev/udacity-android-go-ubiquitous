@@ -15,7 +15,6 @@
  */
 package com.example.android.sunshine.app;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
      * Substitute you own project number here. This project number comes
      * from the Google Developers Console.
      */
-    static final String PROJECT_NUMBER = "Your Project Number";
 
     private boolean mTwoPane;
     private String mLocation;
@@ -111,13 +109,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             mGcm = GoogleCloudMessaging.getInstance(this);
             String regId = getRegistrationId(this);
 
-            if (PROJECT_NUMBER.equals("Your Project Number")) {
-                new AlertDialog.Builder(this)
-                .setTitle("Needs Project Number")
-                .setMessage("GCM will not function in Sunshine until you set the Project Number to the one from the Google Developers Console.")
-                .setPositiveButton(android.R.string.ok, null)
-                .create().show();
-            } else if (regId.isEmpty()) {
+            if (regId.isEmpty()) {
                 registerInBackground(this);
             }
         } else {
@@ -287,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
                     if (mGcm == null) {
                         mGcm = GoogleCloudMessaging.getInstance(context);
                     }
-                    String regId = mGcm.register(PROJECT_NUMBER);
+                    String regId = mGcm.register(getString(R.string.google_project_number));
                     msg = "Device registered, registration ID=" + regId;
 
                     // You should send the registration ID to your server over HTTP,
