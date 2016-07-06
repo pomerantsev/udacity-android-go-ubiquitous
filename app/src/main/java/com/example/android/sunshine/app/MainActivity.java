@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
                     if (mGcm == null) {
                         mGcm = GoogleCloudMessaging.getInstance(context);
                     }
-                    String regId = mGcm.register(getString(R.string.google_project_number));
+                    String regId = mGcm.register(BuildConfig.GOOGLE_PROJECT_NUMBER);
                     msg = "Device registered, registration ID=" + regId;
 
                     // You should send the registration ID to your server over HTTP,

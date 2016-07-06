@@ -1,9 +1,10 @@
-Provide your own Google API key. Create a file /app/src/main/res/values/keys.xml with the following contents:
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="google_project_number">[YOUR_API_KEY]</string>
-</resources>
+Running the project
+===
+
+Provide your own Google and Open Weather Map API keys. Create a /gradle.properties file with the following contents:
+```
+OpenWeatherMapApiKey="<YOUR_KEY>"
+GoogleProjectNumber="<YOUR_NUMBER>"
 ```
 
 License

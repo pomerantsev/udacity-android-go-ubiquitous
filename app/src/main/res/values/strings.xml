@@ -98,6 +98,11 @@
     <!-- Value in SharedPreferences for cute dogs art pack  option [CHAR LIMIT=NONE] -->
     <string name="pref_art_pack_cute_dogs" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-mdpi/art_%s.png</string>
 
+    <!-- Previous values for data displayed on wearables -->
+    <string name="pref_prev_low_temp" translatable="false">prev_low_temp</string>
+    <string name="pref_prev_high_temp" translatable="false">prev_high_temp</string>
+    <string name="pref_prev_art" translatable="false">prev_art</string>
+
     <!-- Language-specific constants -->
     <string name="today">Today</string>
 

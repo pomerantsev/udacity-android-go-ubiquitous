@@ -42,4 +42,4 @@ project.properties
 .gradle
 build/
 
-/app/src/main/res/values/keys.xml
+/gradle.properties

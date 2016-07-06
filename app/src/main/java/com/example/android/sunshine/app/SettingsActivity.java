@@ -138,14 +138,14 @@ public class SettingsActivity extends PreferenceActivity
             SunshineSyncAdapter.syncImmediately(this);
         } else if ( key.equals(getString(R.string.pref_units_key)) ) {
             // units have changed. update lists of weather entries accordingly
-            getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);
+            notifyChange();
         } else if ( key.equals(getString(R.string.pref_location_status_key)) ) {
             // our location status has changed.  Update the summary accordingly
             Preference locationPreference = findPreference(getString(R.string.pref_location_key));
             bindPreferenceSummaryToValue(locationPreference);
         } else if ( key.equals(getString(R.string.pref_art_pack_key)) ) {
             // art pack have changed. update lists of weather entries accordingly
-            getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);
+            notifyChange();
         }
     }
 
@@ -153,5 +153,11 @@ public class SettingsActivity extends PreferenceActivity
     @Override
     public Intent getParentActivityIntent() {
         return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
+
+    private void notifyChange () {
+        getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);
+        Intent wearableUpdaterIntent = new Intent(this, WearableUpdaterService.class);
+        startService(wearableUpdaterIntent);
     }
 }

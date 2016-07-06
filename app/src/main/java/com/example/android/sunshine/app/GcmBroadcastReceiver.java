@@ -55,7 +55,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
              */
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // Is this our message?? Better be if you're going to act on it!
-                if (context.getResources().getString(R.string.google_project_number).equals(extras.getString(EXTRA_SENDER))) {
+                if (BuildConfig.GOOGLE_PROJECT_NUMBER.equals(extras.getString(EXTRA_SENDER))) {
                     // Process message and then post a notification of the received message.
                     String weather = extras.getString(EXTRA_WEATHER);
                     String location = extras.getString(EXTRA_LOCATION);
