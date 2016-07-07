@@ -23,6 +23,8 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -111,6 +113,7 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
         Paint mHighTempPaint;
         Paint mLowTempPaint;
         Paint mIconPaint;
+        Paint mGrayIconPaint;
         boolean mAmbient;
         Time mTime;
         Date mDate;
@@ -190,6 +193,13 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
 
             mIconPaint = new Paint();
             mIconPaint.setAntiAlias(true);
+
+            mGrayIconPaint = new Paint();
+            mGrayIconPaint.setAntiAlias(true);
+            ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(0);
+            ColorMatrixColorFilter filter = new ColorMatrixColorFilter(colorMatrix);
+            mGrayIconPaint.setColorFilter(filter);
 
             mTime = new Time();
             mDate = new Date();
@@ -382,7 +392,8 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                 float fullWeatherWidth = iconWidth + highTempWidth + lowTempWidth + 2 * mWeatherSpaceWidth;
                 if (WeatherListenerService.sIcon != null) {
                     canvas.drawBitmap(WeatherListenerService.sIcon, (mScreenWidth - fullWeatherWidth) / 2,
-                            mWeatherCenterYOffset - iconHeight / 2,mIconPaint);
+                            mWeatherCenterYOffset - iconHeight / 2,
+                            isInAmbientMode() ? mGrayIconPaint : mIconPaint);
                 }
                 canvas.drawText(WeatherListenerService.sHighTemperature,
                         (mScreenWidth - fullWeatherWidth) / 2 + iconWidth + mWeatherSpaceWidth,
