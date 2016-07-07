@@ -25,7 +25,6 @@ public class WeatherListenerPhoneService extends WearableListenerService {
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        Log.d("Phone", "Message received");
         Intent wearableUpdaterIntent = new Intent(this, WearableUpdaterService.class);
         wearableUpdaterIntent.putExtra("force", true);
         startService(wearableUpdaterIntent);

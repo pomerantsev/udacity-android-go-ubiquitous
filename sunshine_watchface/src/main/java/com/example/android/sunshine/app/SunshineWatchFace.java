@@ -30,7 +30,6 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
@@ -39,7 +38,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.MessageApi;
@@ -59,6 +57,8 @@ import java.util.concurrent.TimeUnit;
  * low-bit ambient mode, the text is drawn without anti-aliasing in ambient mode.
  */
 public class SunshineWatchFace extends CanvasWatchFaceService {
+    private static final String TAG = SunshineWatchFace.class.getName();
+
     private static final Typeface NORMAL_TYPEFACE =
             Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
     private static final Typeface LIGHT_TYPEFACE =
@@ -201,19 +201,15 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                 registerReceiver();
 
                 if (!WeatherListenerService.sWeatherReceived) {
-                    Log.d("WeatherListener", "Weather not received");
                     mGoogleApiClient = new GoogleApiClient.Builder(SunshineWatchFace.this)
                             .addApi(Wearable.API)
                             .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                                 @Override
                                 public void onConnected(@Nullable Bundle bundle) {
-                                    Log.d("WeatherListener", "Connected to google api");
                                     (new AsyncTask<Void, Void, Void>() {
                                         @Override
                                         protected Void doInBackground(Void... params) {
-                                            Log.d("WeatherListener", "Starting the async task");
                                             Collection<String> nodes = getNodes();
-                                            Log.d("WeatherListener", "Node count: " + nodes.size());
                                             for (String node : nodes) {
                                                 Wearable.MessageApi.sendMessage(
                                                         mGoogleApiClient, node, "/request-data", new byte[0]).setResultCallback(
@@ -221,16 +217,13 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
                                                             @Override
                                                             public void onResult(MessageApi.SendMessageResult sendMessageResult) {
                                                                 if (!sendMessageResult.getStatus().isSuccess()) {
-                                                                    Log.e("WeatherListener", "Failed to send message with status code: "
+                                                                    Log.e(TAG, "Failed to send message with status code: "
                                                                             + sendMessageResult.getStatus().getStatusCode());
-                                                                } else {
-                                                                    Log.d("WeatherListener", "Message sent successfully");
                                                                 }
                                                             }
                                                         }
                                                 );
                                             }
-
                                             return null;
                                         }
                                     }).execute();
@@ -238,13 +231,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
 
                                 @Override
                                 public void onConnectionSuspended(int i) {
-                                    Log.d("WeatherListener", "Connection suspended");
-                                }
-                            })
-                            .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                                @Override
-                                public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                                    Log.d("WeatherListener", "Connection failed: " + connectionResult);
                                 }
                             })
                             .build();
@@ -320,7 +306,6 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
 
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
-//            Log.d("WeatherListener", "Drawing");
             // Draw the background.
             if (isInAmbientMode()) {
                 canvas.drawColor(Color.BLACK);

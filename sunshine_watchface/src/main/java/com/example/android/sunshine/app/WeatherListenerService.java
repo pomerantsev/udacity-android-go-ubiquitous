@@ -35,7 +35,6 @@ public class WeatherListenerService extends WearableListenerService {
 
     @Override
     public void onDataChanged(DataEventBuffer dataEventBuffer) {
-        Log.d("WeatherListener", "Incoming data event");
         for (DataEvent dataEvent : dataEventBuffer) {
             if (dataEvent.getType() == DataEvent.TYPE_CHANGED) {
                 DataMap dataMap = DataMapItem.fromDataItem(dataEvent.getDataItem()).getDataMap();

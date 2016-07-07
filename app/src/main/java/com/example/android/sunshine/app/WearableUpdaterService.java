@@ -47,8 +47,6 @@ public class WearableUpdaterService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
-            Log.d("WeatherListener", "Updating from a service");
-
             Context context = this;
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             String prevLowTempKey = context.getString(R.string.pref_prev_low_temp);
@@ -63,7 +61,6 @@ public class WearableUpdaterService extends IntentService {
             Cursor cursor = context.getContentResolver().query(weatherUri, NOTIFY_WEATHER_PROJECTION, null, null, null);
 
             if (cursor.moveToFirst()) {
-                Log.d("WeatherListener", "Moved cursor to first position");
                 final String curLowTemp = Utility.formatTemperature(context, cursor.getDouble(INDEX_MIN_TEMP));
                 final String curHighTemp = Utility.formatTemperature(context, cursor.getDouble(INDEX_MAX_TEMP));
                 int weatherId = cursor.getInt(INDEX_WEATHER_ID);
@@ -79,7 +76,6 @@ public class WearableUpdaterService extends IntentService {
                             .fitCenter()
                             .into(90, 90).get();
                 } catch (InterruptedException | ExecutionException e) {
-                    Log.e("WeatherListener", "Error retrieving large icon from " + curArt, e);
                     icon = BitmapFactory.decodeResource(getResources(), artResourceId);
                 }
                 final Bitmap finalIcon = icon;
@@ -88,7 +84,6 @@ public class WearableUpdaterService extends IntentService {
                         !curLowTemp.equals(prevLowTemp) ||
                         !curHighTemp.equals(prevHighTemp) ||
                         !(curArt != null && curArt.equals(prevArt))) {
-                    Log.d("WeatherListener", "Preparing to put data");
                     if (mGoogleApiClient != null) {
                         putData(curLowTemp, curHighTemp, finalIcon);
                     } else {
@@ -122,7 +117,6 @@ public class WearableUpdaterService extends IntentService {
     }
 
     private void putData(String lowTemp, String highTemp, Bitmap icon) {
-        Log.d("WeatherListener", "Putting data: " + lowTemp + " " + highTemp);
         PutDataMapRequest putDataMapRequest = PutDataMapRequest.create("/weather-data");
         putDataMapRequest.getDataMap().putString("low-temperature", lowTemp);
         putDataMapRequest.getDataMap().putString("high-temperature", highTemp);
