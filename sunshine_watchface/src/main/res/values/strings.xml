@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">WatchFace</string>
-    <string name="my_digital_name">Sunshine</string>
+    <string name="watchface_name">Sunshine</string>
 </resources>
