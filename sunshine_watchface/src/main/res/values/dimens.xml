@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="digital_text_size">40dp</dimen>
-    <dimen name="digital_text_size_round">45dp</dimen>
-    <dimen name="digital_x_offset">15dp</dimen>
-    <dimen name="digital_x_offset_round">25dp</dimen>
-    <dimen name="digital_y_offset">90dp</dimen>
+    <dimen name="time_text_size">42dp</dimen>
+    <dimen name="date_text_size">16dp</dimen>
+    <dimen name="temp_text_size">26dp</dimen>
+    <dimen name="time_y_offset">72dp</dimen>
+    <dimen name="date_y_offset">98dp</dimen>
+    <dimen name="icon_size">44dp</dimen>
 
-    <dimen name="weather_x_offset">25dp</dimen>
-    <dimen name="weather_y_offset">150dp</dimen>
+    <dimen name="line_y_offset">120dp</dimen>
+    <dimen name="line_length">40dp</dimen>
+    <dimen name="line_thickness">1dp</dimen>
+
+    <dimen name="weather_center_y_offset">150dp</dimen>
+    <dimen name="weather_space_width">10dp</dimen>
 </resources>

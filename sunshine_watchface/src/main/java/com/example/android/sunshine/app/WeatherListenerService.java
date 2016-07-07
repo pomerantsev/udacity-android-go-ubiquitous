@@ -70,6 +70,8 @@ public class WeatherListenerService extends WearableListenerService {
             return null;
         }
         // decode the stream into a bitmap
-        return BitmapFactory.decodeStream(assetInputStream);
+        int iconSize = getResources().getDimensionPixelSize(R.dimen.icon_size);
+        return Bitmap.createScaledBitmap(BitmapFactory.decodeStream(assetInputStream),
+                iconSize, iconSize, false);
     }
 }
